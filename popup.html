@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp CRM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 320px;
+            min-height: 400px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .status-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 16px;
+        }
+
+        .status-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .status-item:last-child {
+            border-bottom: none;
+        }
+
+        .status-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .status-value {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+        }
+
+        .btn:hover {
+            background: #1ea952;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 12px;
+            color: #856404;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 12px;
+            color: #155724;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 16px;
+            font-size: 11px;
+            color: #666;
+        }
+
+        .emoji {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📋 WhatsApp CRM</h1>
+        <p>Organize suas conversas em categorias</p>
+    </div>
+
+    <div class="content">
+        <div id="status-warning" class="warning" style="display: none;">
+            ⚠️ Abra o WhatsApp Web para usar a extensão
+        </div>
+
+        <div id="status-success" class="success" style="display: none;">
+            ✅ Extensão ativa no WhatsApp Web
+        </div>
+
+        <div class="status-card">
+            <div class="status-title">
+                <span class="emoji">📊</span>
+                Estatísticas
+            </div>
+            <div class="status-item">
+                <span class="status-label">Categorias criadas</span>
+                <span class="status-value" id="categories-count">0</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Conversas categorizadas</span>
+                <span class="status-value" id="categorized-count">0</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Status</span>
+                <span class="status-value" id="extension-status">Verificando...</span>
+            </div>
+        </div>
+
+        <div class="status-card">
+            <div class="status-title">
+                <span class="emoji">🚀</span>
+                Como usar
+            </div>
+            <ol style="padding-left: 20px; color: #666; font-size: 14px; line-height: 1.5;">
+                <li>Abra o WhatsApp Web</li>
+                <li>Veja o painel de categorias no canto direito</li>
+                <li>Crie novas categorias com o botão "+"</li>
+                <li>Arraste conversas para as categorias</li>
+                <li>Suas categorias serão salvas automaticamente</li>
+            </ol>
+        </div>
+
+        <div class="buttons">
+            <button class="btn" id="open-whatsapp">
+                Abrir WhatsApp Web
+            </button>
+            <button class="btn btn-secondary" id="reset-data">
+                Limpar Dados
+            </button>
+        </div>
+    </div>
+
+    <div class="footer">
+        Feito com ❤️ para organizar suas conversas
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
