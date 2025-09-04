@@ -189,17 +189,27 @@
   background: #d0d0d0;
 }
 
-/* Estilos para conversas */
-[data-testid="conversation"].dragging {
+/* Estilos para conversas - múltiplos seletores */
+[data-testid="conversation"].dragging,
+div[role="listitem"].dragging,
+._21S-L.dragging,
+.zoWT4.dragging {
   opacity: 0.6;
   transform: rotate(2deg);
+  transition: all 0.2s ease;
 }
 
-[data-testid="conversation"].crm-categorized {
+[data-testid="conversation"].crm-categorized,
+div[role="listitem"].crm-categorized,
+._21S-L.crm-categorized,
+.zoWT4.crm-categorized {
   position: relative;
 }
 
-[data-testid="conversation"].crm-categorized::before {
+[data-testid="conversation"].crm-categorized::before,
+div[role="listitem"].crm-categorized::before,
+._21S-L.crm-categorized::before,
+.zoWT4.crm-categorized::before {
   content: "📁";
   position: absolute;
   top: 8px;
@@ -213,14 +223,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
+  z-index: 10;
 }
 
-[data-testid="conversation"].crm-uncategorized {
+[data-testid="conversation"].crm-uncategorized,
+div[role="listitem"].crm-uncategorized,
+._21S-L.crm-uncategorized,
+.zoWT4.crm-uncategorized {
   position: relative;
 }
 
-[data-testid="conversation"].crm-uncategorized::after {
+[data-testid="conversation"].crm-uncategorized::after,
+div[role="listitem"].crm-uncategorized::after,
+._21S-L.crm-uncategorized::after,
+.zoWT4.crm-uncategorized::after {
   content: "";
   position: absolute;
   left: 0;
@@ -229,6 +245,7 @@
   width: 3px;
   background: #ffa500;
   border-radius: 0 3px 3px 0;
+  z-index: 1;
 }
 
 /* Scrollbar customizada */

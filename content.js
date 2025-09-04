@@ -13,13 +13,27 @@ class WhatsAppCRM {
   }
 
   waitForWhatsAppLoad() {
+    console.log('WhatsApp CRM: Aguardando carregamento do WhatsApp Web...');
     const checkInterval = setInterval(() => {
-      const chatList = document.querySelector('[data-testid="chat-list"]');
+      // Tentar múltiplos seletores para compatibilidade
+      const chatList = document.querySelector('[data-testid="chat-list"]') ||
+                      document.querySelector('#pane-side') ||
+                      document.querySelector('[role="tabpanel"]') ||
+                      document.querySelector('.app-wrapper-web ._2Ts6i._3RGKj');
+      
       if (chatList) {
+        console.log('WhatsApp CRM: WhatsApp Web carregado, inicializando CRM...');
         clearInterval(checkInterval);
         this.setupCRM();
       }
     }, 1000);
+    
+    // Timeout de segurança
+    setTimeout(() => {
+      clearInterval(checkInterval);
+      console.log('WhatsApp CRM: Timeout atingido, tentando inicializar mesmo assim...');
+      this.setupCRM();
+    }, 15000);
   }
 
   async setupCRM() {
@@ -192,8 +206,18 @@ class WhatsAppCRM {
   }
 
   observeConversations() {
-    const chatList = document.querySelector('[data-testid="chat-list"]');
-    if (!chatList) return;
+    const chatList = document.querySelector('[data-testid="chat-list"]') ||
+                    document.querySelector('#pane-side') ||
+                    document.querySelector('[role="tabpanel"]') ||
+                    document.querySelector('.app-wrapper-web ._2Ts6i._3RGKj');
+    
+    if (!chatList) {
+      console.log('WhatsApp CRM: Lista de chats não encontrada, tentando novamente...');
+      setTimeout(() => this.observeConversations(), 2000);
+      return;
+    }
+
+    console.log('WhatsApp CRM: Lista de chats encontrada, configurando observer...');
 
     // Observer para novas conversas
     const observer = new MutationObserver(() => {
@@ -211,7 +235,18 @@ class WhatsAppCRM {
   }
 
   setupConversationDrag() {
-    const conversations = document.querySelectorAll('[data-testid="conversation"]');
+    // Tentar múltiplos seletores para encontrar conversas
+    const conversations = document.querySelectorAll('[data-testid="conversation"]') ||
+                         document.querySelectorAll('div[role="listitem"]') ||
+                         document.querySelectorAll('._21S-L') ||
+                         document.querySelectorAll('.zoWT4');
+    
+    if (conversations.length === 0) {
+      console.log('WhatsApp CRM: Nenhuma conversa encontrada');
+      return;
+    }
+
+    console.log(`WhatsApp CRM: Configurando drag para ${conversations.length} conversas`);
     
     conversations.forEach(conversation => {
       if (!conversation.hasAttribute('data-crm-setup')) {
@@ -222,11 +257,13 @@ class WhatsAppCRM {
           this.draggedElement = conversation;
           e.dataTransfer.effectAllowed = 'move';
           conversation.classList.add('dragging');
+          console.log('WhatsApp CRM: Iniciando drag da conversa');
         });
 
         conversation.addEventListener('dragend', () => {
           conversation.classList.remove('dragging');
           this.draggedElement = null;
+          console.log('WhatsApp CRM: Finalizando drag da conversa');
         });
       }
     });
@@ -259,8 +296,10 @@ class WhatsAppCRM {
   getConversationId(conversationElement) {
     // Tentar diferentes formas de identificar a conversa
     const titleElement = conversationElement.querySelector('[data-testid="conversation-title"]') ||
-                        conversationElement.querySelector('[title]') ||
-                        conversationElement.querySelector('span[dir="auto"]');
+                        conversationElement.querySelector('span[title]') ||
+                        conversationElement.querySelector('span[dir="auto"]') ||
+                        conversationElement.querySelector('._21S-L span') ||
+                        conversationElement.querySelector('.zoWT4 span');
     
     return titleElement ? titleElement.textContent.trim() : 'unknown_' + Date.now();
   }
@@ -289,7 +328,10 @@ class WhatsAppCRM {
   }
 
   updateConversationStyles() {
-    const conversations = document.querySelectorAll('[data-testid="conversation"]');
+    const conversations = document.querySelectorAll('[data-testid="conversation"]') ||
+                         document.querySelectorAll('div[role="listitem"]') ||
+                         document.querySelectorAll('._21S-L') ||
+                         document.querySelectorAll('.zoWT4');
     
     conversations.forEach(conversation => {
       const conversationId = this.getConversationId(conversation);
@@ -359,8 +401,27 @@ class WhatsAppCRM {
 }
 
 // Inicializar quando a página carregar
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => new WhatsAppCRM());
-} else {
-  new WhatsAppCRM();
+console.log('WhatsApp CRM: Script carregado, estado do documento:', document.readyState);
+
+function initializeWhatsAppCRM() {
+  console.log('WhatsApp CRM: Inicializando extensão...');
+  try {
+    new WhatsAppCRM();
+  } catch (error) {
+    console.error('WhatsApp CRM: Erro ao inicializar:', error);
+  }
 }
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeWhatsAppCRM);
+} else {
+  initializeWhatsAppCRM();
+}
+
+// Fallback para garantir inicialização
+setTimeout(() => {
+  if (!document.getElementById('whatsapp-crm-panel')) {
+    console.log('WhatsApp CRM: Fallback - tentando inicializar novamente...');
+    initializeWhatsAppCRM();
+  }
+}, 5000);

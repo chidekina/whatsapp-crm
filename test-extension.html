@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste WhatsApp CRM Extension</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .instruction { background: #f0f8ff; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .warning { background: #fff3cd; padding: 15px; margin: 10px 0; border-radius: 5px; border-left: 4px solid #ffc107; }
+        .success { background: #d4edda; padding: 15px; margin: 10px 0; border-radius: 5px; border-left: 4px solid #28a745; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Como testar a extensão WhatsApp CRM</h1>
+    
+    <div class="instruction">
+        <h2>📋 Passos para testar:</h2>
+        <ol>
+            <li><strong>Carregar a extensão no Chrome:</strong>
+                <ul>
+                    <li>Abra o Chrome</li>
+                    <li>Digite <code>chrome://extensions/</code> na barra de endereços</li>
+                    <li>Ative o "Modo de desenvolvedor" no canto superior direito</li>
+                    <li>Clique em "Carregar sem compactação"</li>
+                    <li>Selecione a pasta do projeto: <code>/home/hidekina/projetos/whatsapp-crm</code></li>
+                </ul>
+            </li>
+            
+            <li><strong>Testar no WhatsApp Web:</strong>
+                <ul>
+                    <li>Abra uma nova aba</li>
+                    <li>Vá para <a href="https://web.whatsapp.com" target="_blank">https://web.whatsapp.com</a></li>
+                    <li>Faça login normalmente com seu celular</li>
+                    <li>Aguarde a página carregar completamente</li>
+                </ul>
+            </li>
+            
+            <li><strong>Verificar se funciona:</strong>
+                <ul>
+                    <li>Você deve ver um painel "📋 Categorias CRM" no canto superior direito</li>
+                    <li>Abra o Console do Desenvolvedor (F12) para ver os logs</li>
+                    <li>Procure por mensagens "WhatsApp CRM:" no console</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+    
+    <div class="warning">
+        <h3>⚠️ Se ainda não funcionar:</h3>
+        <p>Se o painel não aparecer, verifique:</p>
+        <ul>
+            <li>Abra o Console (F12) e procure por erros</li>
+            <li>Verifique se há mensagens de log "WhatsApp CRM:"</li>
+            <li>A extensão pode levar até 15 segundos para inicializar</li>
+            <li>Tente recarregar a página do WhatsApp Web</li>
+        </ul>
+    </div>
+    
+    <div class="success">
+        <h3>✅ Principais melhorias feitas:</h3>
+        <ul>
+            <li>✅ Adicionados múltiplos seletores CSS para compatibilidade</li>
+            <li>✅ Adicionado timeout de segurança para inicialização</li>
+            <li>✅ Adicionados logs de debug detalhados</li>
+            <li>✅ Fallback para reinicialização automática</li>
+            <li>✅ Melhor detecção de elementos do WhatsApp Web</li>
+        </ul>
+    </div>
+    
+    <div class="instruction">
+        <h3>🎯 Como usar a extensão:</h3>
+        <ol>
+            <li>Clique no botão "+" para criar uma nova categoria</li>
+            <li>Digite o nome da categoria e clique "Salvar"</li>
+            <li>Arraste e solte conversas nas categorias</li>
+            <li>As conversas categorizadas terão um ícone 📁</li>
+            <li>As não categorizadas terão uma barra laranja</li>
+        </ol>
+    </div>
+    
+    <script>
+        console.log('Página de teste carregada. Use esta página para verificar as instruções de teste da extensão.');
+    </script>
+</body>
+</html>
